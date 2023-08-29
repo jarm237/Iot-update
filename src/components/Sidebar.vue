@@ -26,7 +26,7 @@
               Devices
             </a>
           </li>
-          <li class="li-setting">
+          <li>
             <a href="#">
               <img src="../assets/img/setting.png" />
               Settings
