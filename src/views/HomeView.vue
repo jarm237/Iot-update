@@ -88,28 +88,6 @@
           </div>
         </div>
       </div>
-      <div class="status_col s_1">
-        <div>
-          <h1>Pump 1</h1>
-          <h2 v-if="buttonStatus1" style="font-weight: 700; color: #00ac47;">Pump 1 is ON !!! </h2>
-          <h2 v-if="!buttonStatus1" style="font-weight: 700; color: red;">Pump 1 is OFF !!!</h2>
-        </div>
-        <div class="stt">
-          <img src="../assets/img/pump.png" />
-          <div class="btn">
-            <span class="text">OFF</span>
-            <label class="switch">
-              <input
-                v-model="buttonStatus1"
-                v-on:click="toggleButton1()"
-                type="checkbox"
-              />
-              <span class="slider round"></span>
-            </label>
-            <span class="text">ON</span>
-          </div>
-        </div>
-      </div>
       <div class="status_col s_2">
         <div>
           <h1>Pump 2</h1>
@@ -183,6 +161,32 @@
             <span class="text">ON</span>
           </div>
         </div>
+      </div>
+      <div class="status_col s_6">
+        <div>
+          <h1>Bulb</h1>
+          <h2 v-if="buttonStatus6" style="font-weight: 700; color: #00ac47;">Bulb is ON !!! </h2>
+          <h2 v-if="!buttonStatus6" style="font-weight: 700; color: red;">Bulb is OFF !!!</h2>
+        </div>
+        <div class="stt">
+          <img src="../assets/img/pump.png" />
+          <div class="btn">
+            <span class="text">OFF</span>
+            <label class="switch">
+              <input
+                v-model="buttonStatus6"
+                v-on:click="toggleButton6()"
+                type="checkbox"
+              />
+              <span class="slider round"></span>
+            </label>
+            <span class="text">ON</span>
+          </div>
+        </div>
+      </div>
+      <div class="status_col s_plus">
+        <img src="../assets/img/plus.png" />
+        
       </div>
     </div>
 
@@ -337,6 +341,7 @@ import {
   pump2Status,
   fanStatus,
   motorStatus,
+  bulbStatus,
   mode,
   settingThreshold,
   openSwitch,
@@ -350,6 +355,7 @@ export default {
     buttonStatus3: false,
     buttonStatus4: false,
     buttonStatus5: false,
+    buttonStatus6: false,
 
     tempThreshold: "",
     humThreshold: "",
@@ -401,6 +407,14 @@ export default {
     }
     mode.on("value", (snapshot) => {
       this.buttonStatus5 = snapshot.val();
+    });
+
+    const buttonStatus66 = localStorage.getItem("buttonStatus6");
+    if (buttonStatus66) {
+      this.buttonStatus6 = JSON.parse(buttonStatus66);
+    }
+    bulbStatus.on("value", (snapshot) => {
+      this.buttonStatus6 = snapshot.val();
     });
   },
 
@@ -537,8 +551,34 @@ export default {
       localStorage.setItem("buttonStatus5", JSON.stringify(this.buttonStatus5));
     },
 
-    saveData() {
+    toggleButton6() {
+      this.buttonStatus6 = !this.buttonStatus6;
       let obj6 = {
+        buttonStatus6: this.buttonStatus6,
+        timestap: new Date(),
+      };
+      firebase.firestore
+        .collection("Bulb")
+        .add(obj6)
+        .then((doc) => {
+          alert("Data add and Doc id " + doc.id);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+
+      bulbStatus
+        .set(this.buttonStatus6 ? 1 : 0)
+        .then(() => {})
+        .catch((e) => {
+          console.log(e);
+        });
+
+      localStorage.setItem("buttonStatus6", JSON.stringify(this.buttonStatus6));
+    },
+
+    saveData() {
+      let obj7 = {
         tempThreshold: parseInt(this.tempThreshold),
         humThreshold: parseInt(this.humThreshold),
         lightThreshold: parseInt(this.lightThreshold),
@@ -563,7 +603,7 @@ export default {
       }
       firebase.firestore
         .collection("setting threshold")
-        .add(obj6)
+        .add(obj7)
         .then((doc) => {
           alert("Data add and Doc id " + doc.id);
         })
@@ -571,7 +611,7 @@ export default {
           console.log(e);
         });
 
-      settingThreshold.set(obj6, (error) => {
+      settingThreshold.set(obj7, (error) => {
         if (error) {
           console.log(error);
         } else {
@@ -809,7 +849,7 @@ body {
   background-color: white;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr, 1fr);
   width: 900px;
   grid-gap: 20px;
 
@@ -953,6 +993,30 @@ input:checked + .slider:before {
 }
 
 .s_4 img {
+  width: 100px;
+}
+
+.s_6 {
+  margin: 0px 0px 10px 50px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.s_6 img {
+  width: 100px;
+}
+
+.s_plus {
+  margin: 0px 50px 10px 0px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.s_plus img {
   width: 100px;
 }
 

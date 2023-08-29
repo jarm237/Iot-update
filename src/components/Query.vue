@@ -42,6 +42,7 @@
                     { value: "Motor", label: "Motor" },
                     { value: "Pump1", label: "Pump 1" },
                     { value: "Pump2", label: "Pump 2" },
+                    { value: "Bulb", label: "Bulb" },
                     { value: "LightSensor", label: "Light Sensor" },
                 ]
             };

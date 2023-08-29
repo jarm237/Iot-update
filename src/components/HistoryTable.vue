@@ -188,6 +188,28 @@
               console.error('Error getting documents: ', error);
           });
         }
+        else if (collection == 'Bulb') {
+          firebase.firestore().collection('Bulb').get()
+          .then(querySnapshot => {
+              // Transform the query snapshot to an array of objects
+              const collectionNames = [];
+              querySnapshot.forEach(doc => {
+                var date = doc.data().timestap.toDate()
+                var timestamp = date.getFullYear()+
+                                  "/"+((date.getMonth()+1) < 10? ('0' + (date.getMonth()+1)) : (date.getMonth()+1))+
+                                  "/"+(date.getDate() < 10? ('0' + date.getDate()) : date.getDate())+
+                                  " "+(date.getHours() < 10? ('0' + date.getHours()) : date.getHours())+
+                                  ":"+(date.getMinutes() < 10? ('0' + date.getMinutes()) : date.getMinutes())+
+                                  ":"+(date.getSeconds() < 10? ('0' + date.getSeconds()) : date.getSeconds());
+                collectionNames.push({ id: doc.id, value: doc.data().value, timestamp: timestamp });
+              });
+              this.collectionNames = collectionNames;
+              this.originCollection = collectionNames;
+          })
+          .catch(error => {
+              console.error('Error getting documents: ', error);
+          });
+        }
       },
 
       handleReceivedDate(date) {
