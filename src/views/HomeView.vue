@@ -23,7 +23,7 @@
             </a>
           </li>
           <li>
-            <a href="#">
+            <a href="diagnose">
               <img src="../assets/img/disease-prevention.png" />
               Diagnose
             </a>
