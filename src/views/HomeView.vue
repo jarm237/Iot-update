@@ -119,7 +119,7 @@
         <div class="stt">
           <img
             src="../assets/img/fan.png"
-            style="width: 80px; margin-bottom: 5px"
+            style="width: 80px; margin-bottom: 5px; margin-top: 5px"
           />
           <div class="btn">
             <span class="text">OFF</span>
@@ -146,7 +146,7 @@
         <div class="stt">
           <img
             src="../assets/img/timing-belt.png"
-            style="width: 80px; margin-bottom: 5px"
+            style="width: 80px; margin-bottom: 5px; margin-top: 5px""
           />
           <div class="btn">
             <span class="text">OFF</span>
@@ -169,7 +169,8 @@
           <h2 v-if="!buttonStatus6" style="font-weight: 700; color: red;">Bulb is OFF !!!</h2>
         </div>
         <div class="stt">
-          <img src="../assets/img/pump.png" />
+          <img  src="../assets/img/idea.png"
+          style="width: 80px; margin-bottom: 5px; margin-top: 5px"  />
           <div class="btn">
             <span class="text">OFF</span>
             <label class="switch">

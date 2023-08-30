@@ -7,7 +7,9 @@
         <div class="sidebar">
             <Sidebar />
         </div>
-
+        <div>
+            
+        </div>
         <div class="upload-content">
             <div class="preview">
                 <img v-if="item.imageUrl" :src="item.imageUrl" />
@@ -65,7 +67,7 @@
     .container {
         display: grid;
         grid-template-columns: 100px 1fr;
-        grid-template-rows: 50px 100px 1fr 50px;
+        grid-template-rows: 50px 1fr 50px;
         grid-template-areas:
         "header header"
         "sidebar upload-content"
@@ -90,12 +92,20 @@
 
     .upload-content {
         grid-area: upload-content;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
 
     .preview {
-        height: 20%;
-        width: 20%;
+        height: 30%;
+        width: 30%;
         margin: auto;
+    }
+
+    .preview input{
+        max-width: 100px;
     }
 
     .preview img {
