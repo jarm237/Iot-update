@@ -108,7 +108,6 @@
         max-width: 100px;
     }
 
-    .preview img {
-        /* margin: auto; */
-    }
+    /* .preview img {
+    } */
 </style>
