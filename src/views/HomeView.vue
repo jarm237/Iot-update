@@ -218,23 +218,7 @@
             :disabled="!buttonStatus5"
             required
           />
-          <label class="form-label form-label--col2" for="temp-threshold"
-            >Bắt đầu tưới</label
-          >
-          <input
-            class="form-input"
-            v-model="hourPump"
-            placeholder="hour"
-            type="number"
-            id="hour-pump"
-            name="hour-pump"
-            :disabled="!buttonStatus5"
-            required
-          />
-        </div>
-
-        <div class="form-set">
-          <label class="form-label" for="humidity-threshold">Humidity</label>
+          <label class="form-label form-label--col2" for="humidity-threshold">Humidity</label>
           <input
             class="form-input"
             v-model="humThreshold"
@@ -242,19 +226,6 @@
             type="number"
             id="humidity-threshold"
             name="humidity-threshold"
-            :disabled="!buttonStatus5"
-            required
-          />
-          <label class="form-label form-label--col2" for="humidity-threshold"
-            >Thời lượng tưới</label
-          >
-          <input
-            class="form-input"
-            v-model="timePump"
-            placeholder="minutes"
-            type="number"
-            id="time-pump"
-            name="time-pump"
             :disabled="!buttonStatus5"
             required
           />
@@ -272,7 +243,79 @@
             :disabled="!buttonStatus5"
             required
           />
-          <label class="form-label form-label--col2" for="light-threshold"
+          <label class="form-label form-label--col2" for="soil-moisture-threshold">Soil</label>
+          <input
+            class="form-input"
+            v-model="soilThreshold"
+            placeholder="%"
+            type="number"
+            id="soil-moisture-threshold"
+            name="soil-moisture-threshold"
+            :disabled="!buttonStatus5"
+            required
+          />
+        </div>
+
+        <div class="form-set">
+          <label class="form-label" for="hour1-pump"
+            >Thời gian tưới 1</label
+          >
+          <input
+            class="form-input"
+            v-model="hour1Pump"
+            placeholder="hour"
+            type="number"
+            id="hour1-pump"
+            name="hour1-pump"
+            :disabled="!buttonStatus5"
+            required
+          />
+          <label class="form-label form-label--col2" for="time1-pump"
+            >Thời lượng tưới 1</label
+          >
+          <input
+            class="form-input"
+            v-model="time1Pump"
+            placeholder="minutes"
+            type="number"
+            id="time1-pump"
+            name="time1-pump"
+            :disabled="!buttonStatus5"
+            required
+          />
+        </div>
+
+        <div class="form-set">
+          <label class="form-label" for="hour2-pump"
+            >Thời gian tưới 2</label
+          >
+          <input
+            class="form-input"
+            v-model="hour2Pump"
+            placeholder="hour"
+            type="number"
+            id="hour2-pump"
+            name="hour2-pump"
+            :disabled="!buttonStatus5"
+            required
+          />
+          <label class="form-label form-label--col2" for="time2-pump"
+            >Thời lượng tưới 2</label
+          >
+          <input
+            class="form-input"
+            v-model="time2Pump"
+            placeholder="minutes"
+            type="number"
+            id="time2-pump"
+            name="time2-pump"
+            :disabled="!buttonStatus5"
+            required
+          />
+        </div>
+
+        <div class="form-set">
+          <label class="form-label" for="hour-motor"
             >Bắt đầu mở rèm</label
           >
           <input
@@ -285,23 +328,9 @@
             :disabled="!buttonStatus5"
             required
           />
-        </div>
-
-        <div class="form-set">
-          <label class="form-label" for="soil-moisture-threshold">Soil</label>
-          <input
-            class="form-input"
-            v-model="soilThreshold"
-            placeholder="%"
-            type="number"
-            id="soil-moisture-threshold"
-            name="soil-moisture-threshold"
-            :disabled="!buttonStatus5"
-            required
-          />
           <label
             class="form-label form-label--col2"
-            for="soil-moisture-threshold"
+            for="time-motor"
             >Thời lượng mở</label
           >
           <input
@@ -363,8 +392,10 @@ export default {
     lightThreshold: "",
     soilThreshold: "",
 
-    hourPump: "",
-    timePump: "",
+    hour1Pump: "",
+    hour2Pump: "",
+    time1Pump: "",
+    time2Pump: "",
     hourMotor: "",
     timeMotor: "",
   }),
@@ -431,9 +462,6 @@ export default {
       firebase.firestore
         .collection("Pump1")
         .add(obj1)
-        .then((doc) => {
-          alert("Data add and Doc id " + doc.id);
-        })
         .catch((e) => {
           console.log(e);
         });
@@ -457,9 +485,6 @@ export default {
       firebase.firestore
         .collection("Pump2")
         .add(obj2)
-        .then((doc) => {
-          alert("Data add and Doc id " + doc.id);
-        })
         .catch((e) => {
           console.log(e);
         });
@@ -483,9 +508,6 @@ export default {
       firebase.firestore
         .collection("Fan")
         .add(obj3)
-        .then((doc) => {
-          alert("Data add and Doc id " + doc.id);
-        })
         .catch((e) => {
           console.log(e);
         });
@@ -509,9 +531,6 @@ export default {
       firebase.firestore
         .collection("Motor")
         .add(obj4)
-        .then((doc) => {
-          alert("Data add and Doc id " + doc.id);
-        })
         .catch((e) => {
           console.log(e);
         });
@@ -535,9 +554,6 @@ export default {
       firebase.firestore
         .collection("Mode")
         .add(obj5)
-        .then((doc) => {
-          alert("Data add and Doc id " + doc.id);
-        })
         .catch((e) => {
           console.log(e);
         });
@@ -561,9 +577,6 @@ export default {
       firebase.firestore
         .collection("Bulb")
         .add(obj6)
-        .then((doc) => {
-          alert("Data add and Doc id " + doc.id);
-        })
         .catch((e) => {
           console.log(e);
         });
@@ -584,8 +597,10 @@ export default {
         humThreshold: parseInt(this.humThreshold),
         lightThreshold: parseInt(this.lightThreshold),
         soilThreshold: parseInt(this.soilThreshold),
-        hourPump: parseInt(this.hourPump),
-        timePump: parseInt(this.timePump),
+        hour1Pump: parseInt(this.hour1Pump),
+        hour2Pump: parseInt(this.hour2Pump),
+        time1Pump: parseInt(this.time1Pump),
+        time2Pump: parseInt(this.time2Pump),
         hourMotor: parseInt(this.hourMotor),
         timeMotor: parseInt(this.timeMotor),
         timestamp: new Date(),
@@ -595,8 +610,10 @@ export default {
         !this.humThreshold ||
         !this.lightThreshold ||
         !this.soilThreshold ||
-        !this.hourPump ||
-        !this.timePump ||
+        !this.hour1Pump ||
+        !this.hour2Pump ||
+        !this.time1Pump ||
+        !this.time2Pump ||
         !this.hourMotor ||
         !this.timeMotor
       ) {
@@ -605,9 +622,6 @@ export default {
       firebase.firestore
         .collection("setting threshold")
         .add(obj7)
-        .then((doc) => {
-          alert("Data add and Doc id " + doc.id);
-        })
         .catch((e) => {
           console.log(e);
         });
@@ -1128,12 +1142,12 @@ input:checked + .slider:before {
   width: 80px;
   border: 2px;
   border-radius: 5px;
-  height: 30px;
+  height: 27px;
 }
 
 .form-label {
   /* flex: 1; */
-  width: 100px;
+  width: 120px;
   padding-left: 10px;
   text-align: left;
 }
