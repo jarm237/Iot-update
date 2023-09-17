@@ -40,10 +40,21 @@ export const pump2Status = db.ref("status/pump2Status");
 export const fanStatus = db.ref("status/fanStatus");
 export const motorStatus = db.ref("status/motorStatus");
 export const bulbStatus = db.ref("status/bulbStatus");
+export const chenang = db.ref("status/chenang");
 export const mode = db.ref("mode");
 export const closeSwitch = db.ref("system/closeSwitch");
 export const openSwitch = db.ref("system/openSwitch");
-export const settingThreshold = db.ref("settingThreshold")
+export const settingThreshold = db.ref("settingThreshold");
+export const hour1Pump = db.ref("settingThreshold/hour1Pump");
+export const hour2Pump = db.ref("settingThreshold/hour2Pump");
+export const hourMotor = db.ref("settingThreshold/hourMotor");
+export const humThreshold = db.ref("settingThreshold/humThreshold");
+export const lightThreshold = db.ref("settingThreshold/lightThreshold");
+export const soilThreshold = db.ref("settingThreshold/soilThreshold");
+export const tempThreshold = db.ref("settingThreshold/tempThreshold");
+export const time1Pump = db.ref("settingThreshold/time1Pump");
+export const time2Pump = db.ref("settingThreshold/time2Pump");
+export const timeMotor = db.ref("settingThreshold/timeMotor");
 export default {
   firebase: firebase,
   firestore: firebase.firestore(),

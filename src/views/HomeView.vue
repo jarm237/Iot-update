@@ -137,33 +137,6 @@
       </div>
       <div class="status_col s_4">
         <div>
-          <h1>Shade System</h1>
-          <h2 v-if="!buttonStatus4" style="font-weight: 700; color: red;">System is OFF !!!</h2>
-          <h2 v-if="buttonStatus4" style="font-weight: 700; color:#00ac47;">System is ON !!!</h2>
-          <h2 v-if="state.closeSwitch == 1" style="font-weight: 700; color: #2ecc71;">SunShade is CLOSE!</h2>
-          <h2 v-if="state.openSwitch == 1 " style="font-weight: 700; color: #2ecc71;">SunShade is OPEN!</h2>
-        </div>
-        <div class="stt">
-          <img
-            src="../assets/img/timing-belt.png"
-            style="width: 80px; margin-bottom: 5px; margin-top: 5px"
-          />
-          <div class="btn">
-            <span class="text">OFF</span>
-            <label class="switch">
-              <input
-                v-model="buttonStatus4"
-                v-on:click="toggleButton4()"
-                type="checkbox"
-              />
-              <span class="slider round"></span>
-            </label>
-            <span class="text">ON</span>
-          </div>
-        </div>
-      </div>
-      <div class="status_col s_6">
-        <div>
           <h1>Bulb</h1>
           <h2 v-if="buttonStatus6" style="font-weight: 700; color: #00ac47;">Bulb is ON !!! </h2>
           <h2 v-if="!buttonStatus6" style="font-weight: 700; color: red;">Bulb is OFF !!!</h2>
@@ -185,10 +158,67 @@
           </div>
         </div>
       </div>
-      <div class="status_col s_plus">
+      <div class="status_col s_6">
+        <div>
+          <h1>Shade Motor</h1>
+          <h2 v-if="!buttonStatus4" style="font-weight: 700; color: red; padding-left: 15px;">Motor is OFF !!!</h2>
+          <h2 v-if="buttonStatus4" style="font-weight: 700; color:#00ac47; padding-left: 15px;">Motor is ON !!!</h2>
+          <!-- <h2 v-if="state.closeSwitch == 1" style="font-weight: 700; color: #2ecc71;">SunShade is CLOSE!</h2>
+          <h2 v-if="state.openSwitch == 1 " style="font-weight: 700; color: #2ecc71;">SunShade is OPEN!</h2> -->
+        </div>
+        <div class="stt">
+          <img
+            src="../assets/img/timing-belt.png"
+            style="width: 80px; margin-bottom: 5px; margin-top: 5px"
+          />
+          <div class="btn">
+            <span class="text">OFF</span>
+            <label class="switch">
+              <input
+                v-model="buttonStatus4"
+                v-on:click="toggleButton4()"
+                type="checkbox"
+              />
+              <span class="slider round"></span>
+            </label>
+            <span class="text">ON</span>
+          </div>
+        </div>
+      </div>
+      <div class="status_col s_7">
+        <div>
+          <h1>Shade</h1>
+          <h2 v-if="!buttonStatus7" style="font-weight: 700; color: blue;">Shade is OPEN !!!</h2>
+          <h2 v-if="buttonStatus7" style="font-weight: 700; color:blue;">Shade is CLOSE !!!</h2>
+        </div>
+        <div class="stt">
+          <img
+            src="../assets/img/shade.png"
+            style="width: 80px; margin-bottom: 5px; margin-top: 5px"
+          />
+          <div class="btn shade">
+            <span class="text">OPEN</span>
+            <label class="switch">
+              <!-- <input
+                v-model="buttonStatus7"
+                v-on:click="toggleButton7()"
+                type="checkbox"
+              /> -->
+              <input
+                v-model="buttonStatus7"
+                type="checkbox"
+                :disabled="isDisabled"
+              />
+              <span class="slider round"></span>
+            </label>
+            <span class="text">CLOSE</span>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="status_col s_plus">
         <img src="../assets/img/plus.png" />
         
-      </div>
+      </div> -->
     </div>
 
     <div class="status2 layout">
@@ -372,10 +402,21 @@ import {
   fanStatus,
   motorStatus,
   bulbStatus,
+  chenang,
   mode,
   settingThreshold,
-  openSwitch,
-  closeSwitch,
+  // openSwitch,
+  // closeSwitch,
+  hour1Pump,
+  hour2Pump,
+  hourMotor,
+  humThreshold,
+  lightThreshold,
+  soilThreshold,
+  tempThreshold,
+  time1Pump,
+  time2Pump,
+  timeMotor,
 } from "../utl/firebase";
 
 export default {
@@ -386,6 +427,9 @@ export default {
     buttonStatus4: false,
     buttonStatus5: false,
     buttonStatus6: false,
+    buttonStatus7: false,
+
+    isDisabled: true,
 
     tempThreshold: "",
     humThreshold: "",
@@ -447,6 +491,46 @@ export default {
     }
     bulbStatus.on("value", (snapshot) => {
       this.buttonStatus6 = snapshot.val();
+    });
+
+    const buttonStatus77 = localStorage.getItem("buttonStatus7");
+    if (buttonStatus77) {
+      this.buttonStatus7 = JSON.parse(buttonStatus77);
+    }
+    chenang.on("value", (snapshot) => {
+      this.buttonStatus7 = snapshot.val();
+    });
+    localStorage.setItem("buttonStatus7", JSON.stringify(this.buttonStatus7));
+
+    hour1Pump.on("value", (snapshot) => {
+      this.hour1Pump = snapshot.val();
+    });
+    hour2Pump.on("value", (snapshot) => {
+      this.hour2Pump = snapshot.val();
+    });
+    hourMotor.on("value", (snapshot) => {
+      this.hourMotor = snapshot.val();
+    });
+    time1Pump.on("value", (snapshot) => {
+      this.time1Pump = snapshot.val();
+    });
+    time2Pump.on("value", (snapshot) => {
+      this.time2Pump = snapshot.val();
+    });
+    timeMotor.on("value", (snapshot) => {
+      this.timeMotor = snapshot.val();
+    });
+    humThreshold.on("value", (snapshot) => {
+      this.humThreshold = snapshot.val();
+    });
+    lightThreshold.on("value", (snapshot) => {
+      this.lightThreshold = snapshot.val();
+    });
+    soilThreshold.on("value", (snapshot) => {
+      this.soilThreshold = snapshot.val();
+    });
+    tempThreshold.on("value", (snapshot) => {
+      this.tempThreshold = snapshot.val();
     });
   },
 
@@ -669,13 +753,13 @@ export default {
         state.soilData = snapshot.val();
       });
 
-      let cswitchDataSet = await closeSwitch.on("value", (snapshot) => {
-        state.closeSwitch = snapshot.val();
-      });
+      // let cswitchDataSet = await closeSwitch.on("value", (snapshot) => {
+      //   state.closeSwitch = snapshot.val();
+      // });
 
-      let owitchDataSet = await openSwitch.on("value", (snapshot) => {
-        state.openSwitch = snapshot.val();
-      });
+      // let owitchDataSet = await openSwitch.on("value", (snapshot) => {
+      //   state.openSwitch = snapshot.val();
+      // });
 
     });
     return { state };
@@ -971,6 +1055,11 @@ input:checked + .slider:before {
   color: blue;
 }
 
+.shade {
+  width: 190px;
+  padding-right: 30px;
+}
+
 .s_1 img {
   width: 100px;
 }
@@ -1023,8 +1112,20 @@ input:checked + .slider:before {
   width: 100px;
 }
 
-.s_plus {
+.s_7 {
   margin: 0px 50px 10px 0px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.s_7 img {
+  width: 100px;
+}
+
+.s_plus {
+  margin: 0px 0px 10px 50px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -1040,6 +1141,7 @@ input:checked + .slider:before {
   display: flex;
   background-color: white;
   flex-direction: column;
+  margin: auto;
 }
 
 .status2 {
@@ -1139,10 +1241,11 @@ input:checked + .slider:before {
 
 .form-input {
   min-width: 50px;
-  width: 80px;
+  width: 70px;
   border: 2px;
   border-radius: 5px;
   height: 27px;
+  padding-left: 10px;
 }
 
 .form-label {
