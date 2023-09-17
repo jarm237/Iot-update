@@ -146,7 +146,7 @@
         <div class="stt">
           <img
             src="../assets/img/timing-belt.png"
-            style="width: 80px; margin-bottom: 5px; margin-top: 5px""
+            style="width: 80px; margin-bottom: 5px; margin-top: 5px"
           />
           <div class="btn">
             <span class="text">OFF</span>
